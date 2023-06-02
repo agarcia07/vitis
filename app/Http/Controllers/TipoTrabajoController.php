@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Provincia;
+use App\Models\TipoTrabajo;
 use Illuminate\Http\Request;
 
-class ProvinciaController extends Controller
+class TipoTrabajoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class ProvinciaController extends Controller
     public function index()
     {
         //
-        $datos['provincias']=Provincia::paginate();
-        return view('provincia.index', $datos);
+        $datos['tipoTrabajos']=TipoTrabajo::paginate(4);
+        return view('tipo-trabajo.index',$datos);
     }
 
     /**
@@ -27,7 +27,7 @@ class ProvinciaController extends Controller
     public function create()
     {
         //
-        return view('provincia.create');
+        return view('tipo-trabajo.create');
     }
 
     /**
@@ -39,19 +39,19 @@ class ProvinciaController extends Controller
     public function store(Request $request)
     {
         //
-        $datosProvincia = request()->except('_token');
-        Provincia::insert($datosProvincia);
+        $datosTipoTrabajo=request()->except('_token');
+        TipoTrabajo::insert($datosTipoTrabajo);
 
-        return redirect('provincias')->with('mensaje','Provincia creada correctamente.');
+        return redirect('tipo-trabajos')->with('mensaje','Tipo de trabajo creado correctamente.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Provincia  $provincia
+     * @param  \App\Models\TipoTrabajo  $tipoTrabajo
      * @return \Illuminate\Http\Response
      */
-    public function show(Provincia $provincia)
+    public function show(TipoTrabajo $tipoTrabajo)
     {
         //
     }
@@ -59,46 +59,44 @@ class ProvinciaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Provincia  $provincia
+     * @param  \App\Models\TipoTrabajo  $tipoTrabajo
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-       //
-       $provincia=Provincia::findOrFail($id);
-       return view('provincia.edit', compact('provincia'));
+        //
+        $tipoTrabajo=TipoTrabajo::findOrFail($id);
+        return view('tipo-trabajo.edit', compact('tipoTrabajo'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Provincia  $provincia
+     * @param  \App\Models\TipoTrabajo  $tipoTrabajo
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         //
-        $datosProvincia = request()->except('_token','_method');
+        $datosTipoTrabajo=request()->except('_token','_method');
+        TipoTrabajo::where('id','=',$id)->update($datosTipoTrabajo);
 
-        Provincia::where('id','=',$id)->update($datosProvincia);
-
-        return redirect('provincias')->with('mensaje','Provincia modificada correctamente.');
+        return redirect('tipo-trabajos')->with('mensaje','Tipo de trabajo modificado correctamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Provincia  $provincia
+     * @param  \App\Models\TipoTrabajo  $tipoTrabajo
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
-        $provincia=Provincia::findOrFail($id);
+        $tipoTrabajo=TipoTrabajo::findOrFail($id);
+        TipoTrabajo::destroy($id);
 
-        Provincia::destroy($id);
-
-        return redirect('provincias')->with('mensaje','Provincia borrada correctamente.');
+        return redirect('tipo-trabajos')->with('mensaje','Tipo de trabajo borrado coorectamente.');
     }
 }

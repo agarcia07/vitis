@@ -41,6 +41,11 @@
             <!-- Portfolio Section Heading-->
             <h2 class="page-section-heading text-center text-uppercase text-secondary mb-4 mt-5">Parcelas</h2>
             <!-- Icon Divider-->
+            @if(Session::has('mensaje'))
+            <div class="alert alert-success fade show" role="alert" id="alertMes">
+                {{ Session::get('mensaje') }}
+            </div>
+            @endif
             <!-- Portfolio Grid Items-->
             <div class="row justify-content-center">
 
@@ -78,7 +83,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Datos</th>
-                                                        
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -91,16 +96,21 @@
                                                         <td><b>Faltas:</b> {{$parcela['num_uni_falta']}}</td>
                                                     </tr>
                                                     <tr>
-                                                    <td><b>Parcela:</b> {{$parcela['parcela']}}</td>
-                                                    <td><b>Poligono:</b> {{$parcela['poligono']}}</td>
+                                                        <td><b>Parcela:</b> {{$parcela['parcela']}}</td>
+                                                        <td><b>Poligono:</b> {{$parcela['poligono']}}</td>
                                                     </tr>
                                                     <tr>
-                                                    <td><b>Superficie (ha):</b> {{$parcela['superficie_total']}}</td>
-                                                    <td><a class="btn btn-success" href="{{$parcela['url_sigpac']}}" target="_blank">Ver Sigpac</a></td>
+                                                        <td><b>Superficie (ha):</b> {{$parcela['superficie_total']}}</td>
+                                                        <td><a class="btn btn-success" href="{{$parcela['url_sigpac']}}" target="_blank">Ver Sigpac</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <button class="btn btn-primary" data-bs-dismiss="modal">
+                                            <div>
+                                                @include('template.form')
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-primary mt-3" data-bs-dismiss="modal">
                                                 <i class="fas fa-xmark fa-fw"></i>
                                                 Volver
                                             </button>
@@ -134,6 +144,16 @@
     <!-- * *                               SB Forms JS                               * *-->
     <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+
+    <script>
+        // Obten el elemento del alert
+        var alert = document.getElementById('alertMes');
+
+        // Desvanecer y ocultar el alert después de 5 segundos
+        setTimeout(function() {
+            alert.classList.remove('show');
+        }, 5000);
+    </script>
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 

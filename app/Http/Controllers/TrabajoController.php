@@ -15,6 +15,8 @@ class TrabajoController extends Controller
     public function index()
     {
         //
+        $datos['trabajos']=Trabajo::paginate(4);
+        return view('trabajo.index',$datos);
     }
 
     /**
@@ -25,6 +27,7 @@ class TrabajoController extends Controller
     public function create()
     {
         //
+        return view('trabajo.create');
     }
 
     /**
@@ -36,6 +39,10 @@ class TrabajoController extends Controller
     public function store(Request $request)
     {
         //
+        $datosTrabajo=request()->except('_token');
+        Trabajo::insert($datosTrabajo);
+
+        return redirect('trabajos')->with('mensaje','Trabajo creado correctamente.');
     }
 
     /**
@@ -55,9 +62,11 @@ class TrabajoController extends Controller
      * @param  \App\Models\Trabajo  $trabajo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Trabajo $trabajo)
+    public function edit($id)
     {
         //
+        $trabajo=Trabajo::findOrFail($id);
+        return view('trabajo.edit', compact('trabajo'));
     }
 
     /**
@@ -67,9 +76,13 @@ class TrabajoController extends Controller
      * @param  \App\Models\Trabajo  $trabajo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Trabajo $trabajo)
+    public function update(Request $request, $id)
     {
         //
+        $datosTrabajo=request()->except('_token','_method');
+        Trabajo::where('id','=',$id)->update($datosTrabajo);
+
+        return redirect('trabajos')->with('mensaje','Trabajo modificado correctamente.');
     }
 
     /**
@@ -78,8 +91,12 @@ class TrabajoController extends Controller
      * @param  \App\Models\Trabajo  $trabajo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Trabajo $trabajo)
+    public function destroy($id)
     {
         //
+        $trabajo=Trabajo::findOrFail($id);
+        Trabajo::destroy($id);
+
+        return redirect('trabajos')->with('mensaje','Trabajo borrado coorectamente.');
     }
 }

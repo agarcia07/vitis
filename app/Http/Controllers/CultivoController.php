@@ -15,6 +15,8 @@ class CultivoController extends Controller
     public function index()
     {
         //
+        $datos['cultivos']=Cultivo::paginate(4);
+        return view('cultivo.index', $datos);
     }
 
     /**
@@ -25,6 +27,7 @@ class CultivoController extends Controller
     public function create()
     {
         //
+        return view('cultivo.create');
     }
 
     /**
@@ -36,6 +39,10 @@ class CultivoController extends Controller
     public function store(Request $request)
     {
         //
+        $datosCultivo=request()->except('_token');
+        Cultivo::insert($datosCultivo);
+
+        return redirect('cultivos')->with('mensaje','Cultivo creado correctamente.');
     }
 
     /**
@@ -55,9 +62,11 @@ class CultivoController extends Controller
      * @param  \App\Models\Cultivo  $cultivo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cultivo $cultivo)
+    public function edit($id)
     {
         //
+        $cultivo=Cultivo::findOrFail($id);
+        return view('cultivo.edit', compact('cultivo'));
     }
 
     /**
@@ -67,9 +76,13 @@ class CultivoController extends Controller
      * @param  \App\Models\Cultivo  $cultivo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cultivo $cultivo)
+    public function update(Request $request, $id)
     {
         //
+        $datosCultivo = request()->except('_token','_method');
+        Cultivo::where('id','=',$id)->update($datosCultivo);
+
+        return redirect('cultivos')->with('mensaje','Cultivo modificado correctamente.');
     }
 
     /**
@@ -78,8 +91,12 @@ class CultivoController extends Controller
      * @param  \App\Models\Cultivo  $cultivo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cultivo $cultivo)
+    public function destroy($id)
     {
         //
+        $cultivo=Cultivo::findOrFail($id);
+        Cultivo::destroy($id);
+
+        return redirect('cultivos')->with('mensaje','Cultivo eliminado correctamente.');
     }
 }

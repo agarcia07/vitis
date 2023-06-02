@@ -40,19 +40,19 @@
                             <a class="nav-link" href="{{ route('parcelas') }}">Parcelas</a>
                         </li>
                         <li class="nav-item d-block">
-                            <a class="nav-link" href="{{ route('parcelas') }}">Cultivos</a>
+                            <a class="nav-link" href="{{ route('cultivos') }}">Cultivos</a>
                         </li>
                         <li class="nav-item d-block">
-                            <a class="nav-link" href="{{ route('parcelas') }}">Trabajos</a>
+                            <a class="nav-link" href="{{ route('trabajos') }}">Trabajos</a>
                         </li>
                         <li class="nav-item d-block">
-                            <a class="nav-link" href="{{ route('parcelas') }}">Recolección</a>
+                            <a class="nav-link" href="{{ route('tipo-trabajos') }}">Tipos de trabajo</a>
                         </li>
                         <li class="nav-item d-block">
-                            <a class="nav-link" href="{{ route('parcelas') }}">Municipios</a>
+                            <a class="nav-link" href="{{ route('municipios') }}">Municipios</a>
                         </li>
                         <li class="nav-item d-block">
-                            <a class="nav-link" href="{{ route('parcelas') }}">Localidades</a>
+                            <a class="nav-link" href="{{ route('provincias') }}">Provincias</a>
                         </li>
                     </ul>
 

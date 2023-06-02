@@ -15,6 +15,9 @@ class MunicipioController extends Controller
     public function index()
     {
         //
+        $datos['municipios']=Municipio::paginate(4);
+        return view('municipio.index',$datos);
+
     }
 
     /**
@@ -25,6 +28,7 @@ class MunicipioController extends Controller
     public function create()
     {
         //
+        return view('municipio.create');
     }
 
     /**
@@ -36,6 +40,10 @@ class MunicipioController extends Controller
     public function store(Request $request)
     {
         //
+        $datosMunicipio=request()->except('_token');
+        Municipio::insert($datosMunicipio);
+
+        return redirect('municipios')->with('mensaje','Municipio creado correctamente.');
     }
 
     /**
@@ -55,9 +63,11 @@ class MunicipioController extends Controller
      * @param  \App\Models\Municipio  $municipio
      * @return \Illuminate\Http\Response
      */
-    public function edit(Municipio $municipio)
+    public function edit($id)
     {
         //
+        $municipio=Municipio::findOrFail($id);
+        return view('municipio.edit', compact('municipio'));
     }
 
     /**
@@ -67,9 +77,13 @@ class MunicipioController extends Controller
      * @param  \App\Models\Municipio  $municipio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Municipio $municipio)
+    public function update(Request $request, $id)
     {
         //
+        $datosMunicipio=request()->except('_token','_method');
+        Municipio::where('id','=',$id)->update($datosMunicipio);
+
+        return redirect('municipios')->with('mensaje','Municipio modificado correctamente.');
     }
 
     /**
@@ -78,8 +92,12 @@ class MunicipioController extends Controller
      * @param  \App\Models\Municipio  $municipio
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Municipio $municipio)
+    public function destroy($id)
     {
         //
+        $municipio=Municipio::findOrFail($id);
+        Municipio::destroy($id);
+
+        return redirect('municipios')->with('mensaje','Municipio borrado coorectamente.');
     }
 }
