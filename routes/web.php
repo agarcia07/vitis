@@ -38,7 +38,7 @@ Route::get('/parcelas', [ParcelaController::class, 'index'])->middleware('auth')
 
 Route::get('/parcelas/crear', [ParcelaController::class, 'create'])->middleware('auth');
 
-Route::get('/parcelas/editar/{id}', [ParcelaController::class, 'edit'])->middleware('auth');
+Route::get('/parcelas/editar/{id}', [ParcelaController::class, 'edit'])->middleware('auth')->name('editar');
 
 Route::post('/parcelas', [ParcelaController::class, 'store'])->middleware('auth');
 
@@ -98,6 +98,7 @@ Route::delete('/tipo-trabajos/{id}', [TipoTrabajoController::class, 'destroy'])-
 //AUTENTICACION
 //Eliminamos el enlace de registro y de olvido la contraseña
 Auth::routes(['register'=>false,'reset'=>false]);
+// Auth::routes(['reset'=>false]);
 
 Route::get('/home', [ParcelaController::class, 'index'])->name('home');
 

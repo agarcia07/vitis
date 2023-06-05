@@ -9,20 +9,44 @@ use App\Models\TipoTrabajo;
 use App\Models\Webvitis;
 use Carbon\Carbon;
 use App\Http\Controllers\ParcelaController;
+use App\Models\Municipio;
 
 class WebvitisController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $parcelas = Parcela::all();
+        //$parcelas = Parcela::all();
         $tipoTrabajos = TipoTrabajo::all();
+        $trabajos = Trabajo::all();
+
+        //Buscador web
+        $busqueda = $request->busqueda;
+        $parcelas = Parcela::where('nombre','LIKE','%'.$busqueda.'%')
+                                ->latest('id')
+                                ->get();
+
 
 
         return view('template.index', [
             'parcelas' => $parcelas->toArray(),
-            'tipoTrabajos' => $tipoTrabajos->toArray()
+            'tipoTrabajos' => $tipoTrabajos->toArray(),
+            'trabajos' => $trabajos->toArray(),
+            'busqueda'=>$busqueda
         ]);
+    }
+
+    public function obtenerDatos($trabajo,$parcela)
+    {
+        $anyoActual = Carbon::now()->format('Y');
+
+        $resultado = Trabajo::where('fecha_realizacion', 'LIKE', $anyoActual.'%')
+        ->where('nombre', $trabajo)
+        ->where('nombre_parcela', $parcela)
+        ->count();
+
+
+        return $resultado;
     }
 
     public function storeTrabajo(Request $request)

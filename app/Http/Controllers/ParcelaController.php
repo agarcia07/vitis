@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Municipio;
 use App\Models\Parcela;
+use App\Models\Provincia;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +19,7 @@ class ParcelaController extends Controller
     public function index()
     {
         //
-        $datos['parcelas']=Parcela::paginate(4);
+        $datos['parcelas']=Parcela::paginate();
         return view('parcela.index', $datos);
 
     }
@@ -30,7 +32,13 @@ class ParcelaController extends Controller
     public function create()
     {
         //
-        return view('parcela.create');
+        $datosMunicipios['datosMunicipios']=Municipio::all();
+        $datosProvincias['datosProvincias']=Provincia::all();
+
+        return view('parcela.create', [
+            'datosMunicipios' => $datosMunicipios,
+            'datosProvincias' => $datosProvincias
+        ]);
     }
 
     /**
@@ -59,8 +67,8 @@ class ParcelaController extends Controller
             'superficie_uso'=>'required',
             'recinto'=>'required|integer',
             'pendiente'=>'required',
-            'referencia_catastral'=>'required|string|max:10000',
-            'url_sigpac'=>'required|string|max:10000'
+            'referencia_catastral'=>'required|string|max:10000'
+            // 'url_sigpac'=>'required|string|max:10000'
 
         ];
 
@@ -76,6 +84,15 @@ class ParcelaController extends Controller
 
         // $datosParcela = request()->all();
         $datosParcela = request()->except('_token','imagen_url');
+        
+        $datosParcela['url_sigpac'] = "https://sigpac.mapa.gob.es/fega/visor/?provincia=".$datosParcela['provincia_id'].
+                                    "&municipio=".$datosParcela['municipio_id'].
+                                    "&agregado=".$datosParcela['agregado'].
+                                    "&zona=".$datosParcela['zona'].
+                                    "&poligono=".$datosParcela['poligono'].
+                                    "&parcela=".$datosParcela['parcela'].
+                                    "&recinto=".$datosParcela['recinto'];
+
 
         if($request->hasFile('imagen')){
             $datosParcela['imagen']=$request->file('imagen')->store('uploads','public');
@@ -111,8 +128,16 @@ class ParcelaController extends Controller
     public function edit($id)
     {
         //
+        $datosMunicipios['datosMunicipios']=Municipio::all();
+        $datosProvincias['datosProvincias']=Provincia::all();
+
+
+
         $parcela=Parcela::findOrFail($id);
-        return view('parcela.edit', compact('parcela'));
+        return view('parcela.edit', array_merge(compact('parcela'), [
+            'datosMunicipios' => $datosMunicipios,
+            'datosProvincias' => $datosProvincias
+        ]));
     }
 
     /**

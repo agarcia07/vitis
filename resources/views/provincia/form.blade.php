@@ -11,7 +11,10 @@
 </div>
 
 @endif
-
+<div class="form-group">
+    <label for="id">Id: </label>
+    <input type="text" name="id" class="form-control" value="{{ isset($provincia->id) ? $provincia->id : old('id') }}" id="id"><br>
+</div>
 <div class="form-group">
     <label for="nombre">Nombre: </label>
     <input type="text" name="nombre" class="form-control" value="{{ isset($provincia->nombre) ? $provincia->nombre : old('nombre') }}" id="nombre"><br>

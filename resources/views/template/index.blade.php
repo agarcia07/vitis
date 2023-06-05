@@ -1,3 +1,6 @@
+@php
+use Carbon\Carbon;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +11,7 @@
     <meta name="author" content="" />
     <title>Vitis</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="img/brand/vitis-icono.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -20,11 +23,10 @@
 
 <body id="page-top">
     <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="#page-top"><img src="{{ asset('img/brand/VITIS.png') }}" class="img-fluid w-50 h-50" alt="Logo de la página"></a>
-            <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
+    <nav class="navbar navbar-expand-lg bg-primary text-uppercase fixed-top" id="mainNav">
+        <div class="container flex-nowrap">
+            <a class="navbar-brand" href="{{route('web')}}"><img src="{{ asset('img/brand/Vitis-blanco.png') }}" class="img-fluid w-25 h-25" alt="Logo de la página"></a>
+            <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded m-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -39,7 +41,17 @@
     <section class="page-section portfolio" id="portfolio">
         <div class="container">
             <!-- Portfolio Section Heading-->
-            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-4 mt-5">Parcelas</h2>
+            <a class="text-decoration-none" href="{{route('web')}}">
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-4 mt-5">Parcelas</h2>
+            </a>
+            <div class="d-md-flex justify-content-md-center mb-3">
+                <form class="d-flex justify-content-center pt-3 pb-3" action="{{route('web')}}" method="GET">
+                    <div class="btn-group">
+                        <input type="text" class="form-control" name="busqueda">
+                        <input type="submit" class="btn btn-primary" value="Buscar">
+                    </div>
+                </form>
+            </div>
             <!-- Icon Divider-->
             @if(Session::has('mensaje'))
             <div class="alert alert-success fade show" role="alert" id="alertMes">
@@ -54,9 +66,9 @@
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal{{$parcela['id']}}">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-eye fa-3x"></i></div>
                         </div>
-                        <h3>{{$parcela['nombre']}}</h3>
+                        <h3 class="d-flex justify-content-center">{{$parcela['nombre']}}</h3>
                         <img class="img-fluid" src="{{asset('storage').'/'.$parcela['imagen']}}" alt="..." />
                     </div>
                 </div>
@@ -79,32 +91,97 @@
                                             <!-- Portfolio Modal - Image-->
                                             <img class="img-fluid rounded mb-5" src="{{asset('storage').'/'.$parcela['imagen']}}" alt="..." />
                                             <!-- Portfolio Modal - Text-->
-                                            <table class="table">
+
+
+                                            <div class="">
+                                            <div class="row">
+                                            <div class="col-8">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="font-weight-bold fs-5">Datos</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><b>Nombre:</b> {{$parcela['nombre']}} &nbsp;&nbsp; <b>Cultivo:</b> {{$parcela['cultivo']}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Cepas:</b> {{ $parcela['num_uni_total']-$parcela['num_uni_falta']}} &nbsp;&nbsp; <b>Faltas:</b> {{$parcela['num_uni_falta']}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Parcela:</b> {{$parcela['parcela']}} &nbsp;&nbsp; <b>Polígono:</b> {{$parcela['poligono']}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Superficie (ha):</b> {{$parcela['superficie_total']}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a class="btn btn-warning" href="{{$parcela['url_sigpac']}}" target="_blank">Ver Sigpac</a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-4">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="font-weight-bold fs-5">Trabajos</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($tipoTrabajos as $tipoTrabajo)
+
+                                                        <tr>
+                                                            <td><b>{{$tipoTrabajo['nombre']}}:</b> &nbsp;&nbsp;
+
+                                                                @php
+                                                                $webvitisController = new App\Http\Controllers\WebvitisController();
+                                                                $resultado = $webvitisController->obtenerDatos($tipoTrabajo['nombre'], $parcela['nombre']);
+                                                                $cadenaX = str_repeat('X ', $resultado);
+                                                                @endphp
+
+                                                                <span class="text-danger font-weight-bold fs-5">{{$cadenaX}}</span>
+
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+
+                                                        @endforeach
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            </div>
+                                            </div>
+
+
+                                            <!-- <table class="table">
                                                 <thead>
                                                     <tr>
                                                         <th>Datos</th>
-
+                                                        <th>Trabajos</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td><b>Nombre:</b> {{$parcela['nombre']}}</td>
-                                                        <td><b>Cultivo:</b> {{$parcela['cultivo']}}</td>
+                                                        <td><b>Nombre:</b> {{$parcela['nombre']}} &nbsp;&nbsp; <b>Cultivo:</b> {{$parcela['cultivo']}}</td>
+                                                        <td></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><b>Cepas:</b> {{ $parcela['num_uni_total']-$parcela['num_uni_falta']}}</td>
-                                                        <td><b>Faltas:</b> {{$parcela['num_uni_falta']}}</td>
+                                                        <td><b>Cepas:</b> {{ $parcela['num_uni_total']-$parcela['num_uni_falta']}} &nbsp;&nbsp; <b>Faltas:</b> {{$parcela['num_uni_falta']}}</td>
+                                                        <td></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><b>Parcela:</b> {{$parcela['parcela']}}</td>
-                                                        <td><b>Poligono:</b> {{$parcela['poligono']}}</td>
+                                                        <td><b>Parcela:</b> {{$parcela['parcela']}} &nbsp;&nbsp; <b>Poligono:</b> {{$parcela['poligono']}}</td>
+                                                        <td></td>
                                                     </tr>
                                                     <tr>
                                                         <td><b>Superficie (ha):</b> {{$parcela['superficie_total']}}</td>
                                                         <td><a class="btn btn-success" href="{{$parcela['url_sigpac']}}" target="_blank">Ver Sigpac</a></td>
                                                     </tr>
                                                 </tbody>
-                                            </table>
+                                            </table> -->
                                             <div>
                                                 @include('template.form')
                                             </div>
@@ -125,7 +202,14 @@
 
             </div>
         </div>
+
     </section>
+    <footer class="fixed-bottom bg-primary text-white text-center py-2">
+        <div class="container">
+            <p class="m-0">&copy; Vitis {{ Carbon::now()->format('Y') }} - AGarcia</p>
+        </div>
+    </footer>
+
 
 
 

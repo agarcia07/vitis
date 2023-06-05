@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Trabajo;
+use App\Models\Parcela;
+use App\Models\TipoTrabajo;
 use Illuminate\Http\Request;
 
 class TrabajoController extends Controller
@@ -15,7 +17,7 @@ class TrabajoController extends Controller
     public function index()
     {
         //
-        $datos['trabajos']=Trabajo::paginate(4);
+        $datos['trabajos']=Trabajo::paginate();
         return view('trabajo.index',$datos);
     }
 
@@ -27,7 +29,12 @@ class TrabajoController extends Controller
     public function create()
     {
         //
-        return view('trabajo.create');
+        $parcelas['parcelas']=Parcela::all();
+        $tipoTrabajos['tipoTrabajos']=TipoTrabajo::all();
+
+    
+
+        return view('trabajo.create')->with('parcelas', $parcelas)->with('tipoTrabajos', $tipoTrabajos);
     }
 
     /**

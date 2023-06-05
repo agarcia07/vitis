@@ -1,15 +1,18 @@
+@php
+use Carbon\Carbon;
+@endphp
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="icon" type="image/x-icon" href="img/brand/vitis-icono.ico" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+    @yield('css')
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
@@ -17,19 +20,21 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
 <body>
-    <div id="app">
+    <div class="mb-5" id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+            <div class="container flex-nowrap">
                 <a class="navbar-brand" href="{{ url('/web') }}">
                     <!-- {{ config('app.name', 'Laravel') }} -->
-                    <img src="{{ asset('img/brand/VITIS.png') }}" class="img-fluid w-50 h-50" alt="Logo de la página">
+                    <img src="{{ asset('img/brand/Vitis-negro.png') }}" class="img-fluid w-25 h-25" alt="Logo vitis">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler m-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -98,6 +103,12 @@
             @yield('content')
         </main>
     </div>
+    @yield('js')
+    <footer class="fixed-bottom bg-white text-grey text-center py-2">
+        <div class="container">
+            <p class="m-0">&copy; Vitis {{ Carbon::now()->format('Y') }} - AGarcia</p>
+        </div>
+    </footer>
 </body>
 
 </html>

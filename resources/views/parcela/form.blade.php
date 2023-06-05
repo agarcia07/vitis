@@ -47,17 +47,19 @@
 <div class="form-group">
     <label for="provincia_id">Provincia: </label>
     <select name="provincia_id" class="form-control" id="provincia_id">
-        <option value="1" {{ isset($parcela->provincia_id) && $parcela->provincia_id == 1 ? 'selected' : old('provincia_id') }}>Valencia</option>
+        @foreach($datosProvincias['datosProvincias'] as $datosProvincia)
+        <option value="{{$datosProvincia->id}}" {{ isset($parcela->provincia_id) && $parcela->provincia_id == $datosProvincia->id ? 'selected' : old('provincia_id') }}>{{$datosProvincia->nombre}}</option>
+        @endforeach
     </select><br>
 </div>
 
 <div class="form-group">
     <label for="municipio_id">Municipio: </label>
     <select name="municipio_id" class="form-control" id="municipio_id">
-        <option value="21" {{ isset($parcela->municipio_id) && $parcela->municipio_id == '21' ? 'selected' : old('municipio_id') }}>Requena</option>
-        <option value="15" {{ isset($parcela->municipio_id) && $parcela->municipio_id == '15' ? 'selected' : old('municipio_id') }}>Utiel</option>
-        <option value="30" {{ isset($parcela->municipio_id) && $parcela->municipio_id == '30' ? 'selected' : old('municipio_id') }}>Caudete de las fuentes</option>
-    </select><br>
+        @foreach($datosMunicipios['datosMunicipios'] as $datosMunicipio)
+        <option value="{{$datosMunicipio->id}}" {{ isset($parcela->municipio_id) && $parcela->municipio_id == $datosMunicipio->id ? 'selected' : old('municipio_id') }}>{{$datosMunicipio->nombre}}</option>
+        @endforeach
+</select><br>
 </div>
 
 <div class="form-group">
@@ -104,12 +106,12 @@
     <label for="referencia_catastral">Referencia catastral: </label>
     <input type="text" name="referencia_catastral" class="form-control" value="{{ isset($parcela->referencia_catastral) ? $parcela->referencia_catastral : old('referencia_catastral') }}" id="referencia_catastral"><br>
 </div>
-
+@if(request()->route()->getName() == 'editar')
 <div class="form-group">
     <label for="url_sigpac">Url Sigpac: </label>
     <input type="text" name="url_sigpac" class="form-control" value="{{ isset($parcela->url_sigpac) ? $parcela->url_sigpac : old('url_sigpac') }}" id="url_sigpac"><br>
 </div>
-
+@endif
 <input type="submit" class="btn btn-success" value="{{$modo}} parcela" id="Enviar">
 
 <a class="btn btn-primary" href="{{ url('parcelas/') }}">Regresar</a>

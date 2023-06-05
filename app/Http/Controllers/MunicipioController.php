@@ -15,7 +15,7 @@ class MunicipioController extends Controller
     public function index()
     {
         //
-        $datos['municipios']=Municipio::paginate(4);
+        $datos['municipios']=Municipio::paginate();
         return view('municipio.index',$datos);
 
     }
