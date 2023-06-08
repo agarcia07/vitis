@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Municipio;
 use App\Models\Parcela;
 use App\Models\Provincia;
+use App\Models\Propietario;
+use App\Models\Cultivo;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -34,10 +36,15 @@ class ParcelaController extends Controller
         //
         $datosMunicipios['datosMunicipios']=Municipio::all();
         $datosProvincias['datosProvincias']=Provincia::all();
+        $datosPropietarios['datosPropietarios']=Propietario::all();
+        $datosCultivos['datosCultivos']=Cultivo::all();
+
 
         return view('parcela.create', [
             'datosMunicipios' => $datosMunicipios,
-            'datosProvincias' => $datosProvincias
+            'datosProvincias' => $datosProvincias,
+            'datosPropietarios' => $datosPropietarios,
+            'datosCultivos' => $datosCultivos
         ]);
     }
 
@@ -130,13 +137,17 @@ class ParcelaController extends Controller
         //
         $datosMunicipios['datosMunicipios']=Municipio::all();
         $datosProvincias['datosProvincias']=Provincia::all();
+        $datosPropietarios['datosPropietarios']=Propietario::all();
+        $datosCultivos['datosCultivos']=Cultivo::all();
 
 
 
         $parcela=Parcela::findOrFail($id);
         return view('parcela.edit', array_merge(compact('parcela'), [
             'datosMunicipios' => $datosMunicipios,
-            'datosProvincias' => $datosProvincias
+            'datosProvincias' => $datosProvincias,
+            'datosPropietarios' => $datosPropietarios,
+            'datosCultivos' => $datosCultivos
         ]));
     }
 

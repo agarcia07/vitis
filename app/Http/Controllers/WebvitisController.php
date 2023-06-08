@@ -38,15 +38,28 @@ class WebvitisController extends Controller
 
     public function obtenerDatos($trabajo,$parcela)
     {
+        $fechaInicio = Carbon::now()->subYear()->startOfYear()->month(11)->startOfMonth();
+
+        $resultado = Trabajo::where('fecha_realizacion', '>', $fechaInicio)
+            ->where('nombre', $trabajo)
+            ->where('nombre_parcela', $parcela)
+            ->count();
+
+
+        return $resultado;
+    }
+
+    public function obtenerVueltasLabrar($parcela)
+    {
         $anyoActual = Carbon::now()->format('Y');
 
-        $resultado = Trabajo::where('fecha_realizacion', 'LIKE', $anyoActual.'%')
-        ->where('nombre', $trabajo)
+        $resultadoVueltas = Trabajo::where('fecha_realizacion', 'LIKE', $anyoActual.'%')
+        ->where('nombre', 'Labrar x2')
         ->where('nombre_parcela', $parcela)
         ->count();
 
 
-        return $resultado;
+        return $resultadoVueltas;
     }
 
     public function storeTrabajo(Request $request)

@@ -16,8 +16,7 @@
 </div>
 <select name="nombre" class="form-control" id="nombre">
         @foreach($tipoTrabajos['tipoTrabajos'] as $tipoTrabajo)
-        <option value="{{$tipoTrabajo->nombre}}">{{$tipoTrabajo->nombre}}</option>
-      
+        <option value="{{$tipoTrabajo->nombre}}" {{ isset($trabajo->nombre) && $trabajo->nombre == $tipoTrabajo->nombre ? 'selected' : old('nombre') }}>{{$tipoTrabajo->nombre}}</option>     
         @endforeach
     </select><br>
 <div class="form-group">
@@ -29,8 +28,7 @@
 
     <select name="nombre_parcela" class="form-control" id="nombre_parcela">
         @foreach($parcelas['parcelas'] as $parcela)
-        <option value="{{$parcela->nombre}}">{{$parcela->nombre}}</option>
-      
+        <option value="{{$parcela->nombre}}" {{ isset($trabajo->nombre_parcela) && $trabajo->nombre_parcela == $parcela->nombre ? 'selected' : old('nombre_parcela') }}>{{$parcela->nombre}}</option>    
         @endforeach
     </select><br>
 

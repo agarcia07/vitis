@@ -19,6 +19,7 @@
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Nombre</th>
+                    <th scope="col">Propietario</th>
                     <th scope="col">Cultivo</th>
                     <th scope="col">Plantas totales</th>
                     <th scope="col">Faltas</th>
@@ -41,6 +42,7 @@
                 <tr>
                     <th scope="row">{{ $parcela->id }}</th>
                     <td>{{ $parcela->nombre }}</td>
+                    <td>{{ $parcela->propietario }}</td>
                     <td>{{ $parcela->cultivo }}</td>
                     <td>{{ $parcela->num_uni_total }}</td>
                     <td>{{ $parcela->num_uni_falta }}</td>

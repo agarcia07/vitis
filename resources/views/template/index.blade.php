@@ -104,7 +104,7 @@ use Carbon\Carbon;
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td><b>Nombre:</b> {{$parcela['nombre']}} &nbsp;&nbsp; <b>Cultivo:</b> {{$parcela['cultivo']}}</td>
+                                                            <td><b>Propietario:</b> {{$parcela['propietario']}} &nbsp;&nbsp; <b>Cultivo:</b> {{$parcela['cultivo']}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td><b>Cepas:</b> {{ $parcela['num_uni_total']-$parcela['num_uni_falta']}} &nbsp;&nbsp; <b>Faltas:</b> {{$parcela['num_uni_falta']}}</td>
@@ -130,15 +130,29 @@ use Carbon\Carbon;
                                                     </thead>
                                                     <tbody>
                                                         @foreach($tipoTrabajos as $tipoTrabajo)
-
+                                                        @php if ($tipoTrabajo['nombre'] == 'Labrar x2') {continue;} @endphp
                                                         <tr>
                                                             <td><b>{{$tipoTrabajo['nombre']}}:</b> &nbsp;&nbsp;
 
                                                                 @php
                                                                 $webvitisController = new App\Http\Controllers\WebvitisController();
-                                                                $resultado = $webvitisController->obtenerDatos($tipoTrabajo['nombre'], $parcela['nombre']);
-                                                                $cadenaX = str_repeat('X ', $resultado);
+                                                                if ($tipoTrabajo['nombre'] == 'Labrar') {
+                                                                    $resultado = $webvitisController->obtenerDatos($tipoTrabajo['nombre'], $parcela['nombre']);
+                                                                    $cadena1 = str_repeat('X ', $resultado);
+
+                                                                    $resultado2 = $webvitisController->obtenerVueltasLabrar($parcela['nombre']);
+                                                                    $cadena2 = str_repeat('O ', $resultado2);
+
+                                                                    $cadenaX = $cadena1 . $cadena2;
+                                                                } else {
+
+                                                                    $resultado = $webvitisController->obtenerDatos($tipoTrabajo['nombre'], $parcela['nombre']);
+                                                                    $cadenaX = str_repeat('X ', $resultado);
+                                                                   
+                                                                }
                                                                 @endphp
+                                                                
+                                                               
 
                                                                 <span class="text-danger font-weight-bold fs-5">{{$cadenaX}}</span>
 

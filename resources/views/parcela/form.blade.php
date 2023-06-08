@@ -17,10 +17,22 @@
     <input type="text" name="nombre" class="form-control" value="{{ isset($parcela->nombre) ? $parcela->nombre : old('nombre') }}" id="nombre"><br>
 </div>
 
+<div class="form-group">
+    <label for="propietario">Propietario: </label>
+    <select name="propietario" class="form-control" id="propietario">
+        @foreach($datosPropietarios['datosPropietarios'] as $datosPropietario)
+        <option value="{{$datosPropietario->nombre}}" {{ isset($parcela->propietario) && $parcela->propietario == $datosPropietario->nombre ? 'selected' : old('propietario') }}>{{$datosPropietario->nombre}}</option>
+        @endforeach
+    </select><br>
+</div>
 
 <div class="form-group">
     <label for="cultivo">Cultivo: </label>
-    <input type="text" name="cultivo" class="form-control" value="{{ isset($parcela->cultivo) ? $parcela->cultivo : old('cultivo') }}" id="cultivo"><br>
+    <select name="cultivo" class="form-control" id="cultivo">
+        @foreach($datosCultivos['datosCultivos'] as $datosCultivo)
+        <option value="{{$datosCultivo->nombre}}" {{ isset($parcela->cultivo) && $parcela->cultivo == $datosCultivo->nombre ? 'selected' : old('cultivo') }}>{{$datosCultivo->nombre}}</option>
+        @endforeach
+    </select><br>
 </div>
 
 <div class="form-group">

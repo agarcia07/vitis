@@ -73,7 +73,10 @@ class TrabajoController extends Controller
     {
         //
         $trabajo=Trabajo::findOrFail($id);
-        return view('trabajo.edit', compact('trabajo'));
+        $parcelas['parcelas']=Parcela::all();
+        $tipoTrabajos['tipoTrabajos']=TipoTrabajo::all();
+
+        return view('trabajo.edit', compact('trabajo'))->with('parcelas', $parcelas)->with('tipoTrabajos', $tipoTrabajos);;
     }
 
     /**

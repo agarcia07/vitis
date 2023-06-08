@@ -5,6 +5,7 @@ use App\Http\Controllers\MunicipioController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ParcelaController;
 use App\Http\Controllers\ProvinciaController;
+use App\Http\Controllers\PropietarioController;
 use App\Http\Controllers\TrabajoController;
 use App\Http\Controllers\TipoTrabajoController;
 use App\Http\Controllers\WebvitisController;
@@ -60,6 +61,14 @@ Route::post('/provincias', [ProvinciaController::class, 'store'])->middleware('a
 Route::get('provincias/editar/{id}', [ProvinciaController::class, 'edit'])->middleware('auth');
 Route::patch('provincias/{id}', [ProvinciaController::class, 'update'])->middleware('auth');
 Route::delete('/provincias/{id}', [ProvinciaController::class, 'destroy'])->middleware('auth');
+
+//PROPIETARIOS
+Route::get('/propietarios', [PropietarioController::class, 'index'])->middleware('auth')->name('propietarios');
+Route::get('/propietarios/crear', [PropietarioController::class, 'create'])->middleware('auth');
+Route::post('/propietarios', [PropietarioController::class, 'store'])->middleware('auth');
+Route::get('propietarios/editar/{id}', [PropietarioController::class, 'edit'])->middleware('auth');
+Route::patch('propietarios/{id}', [PropietarioController::class, 'update'])->middleware('auth');
+Route::delete('/propietarios/{id}', [PropietarioController::class, 'destroy'])->middleware('auth');
 
 //MUNICIPIOS
 Route::get('/municipios', [MunicipioController::class, 'index'])->middleware('auth')->name('municipios');

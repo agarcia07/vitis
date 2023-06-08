@@ -45,6 +45,9 @@ use Carbon\Carbon;
                             <a class="nav-link" href="{{ route('parcelas') }}">Parcelas</a>
                         </li>
                         <li class="nav-item d-block">
+                            <a class="nav-link" href="{{ route('propietarios') }}">Propietarios</a>
+                        </li>
+                        <li class="nav-item d-block">
                             <a class="nav-link" href="{{ route('cultivos') }}">Cultivos</a>
                         </li>
                         <li class="nav-item d-block">
