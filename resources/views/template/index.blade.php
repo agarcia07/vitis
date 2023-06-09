@@ -93,80 +93,81 @@ use Carbon\Carbon;
                                             <!-- Portfolio Modal - Text-->
 
 
-                                            <div class="">
-                                            <div class="row">
-                                            <div class="col-8">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="font-weight-bold fs-5">Datos</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td><b>Propietario:</b> {{$parcela['propietario']}} &nbsp;&nbsp; <b>Cultivo:</b> {{$parcela['cultivo']}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><b>Cepas:</b> {{ $parcela['num_uni_total']-$parcela['num_uni_falta']}} &nbsp;&nbsp; <b>Faltas:</b> {{$parcela['num_uni_falta']}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><b>Parcela:</b> {{$parcela['parcela']}} &nbsp;&nbsp; <b>Polígono:</b> {{$parcela['poligono']}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><b>Superficie (ha):</b> {{$parcela['superficie_total']}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><a class="btn btn-warning" href="{{$parcela['url_sigpac']}}" target="_blank">Ver Sigpac</a></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-4">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="font-weight-bold fs-5">Trabajos</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach($tipoTrabajos as $tipoTrabajo)
-                                                        @php if ($tipoTrabajo['nombre'] == 'Labrar x2') {continue;} @endphp
-                                                        <tr>
-                                                            <td><b>{{$tipoTrabajo['nombre']}}:</b> &nbsp;&nbsp;
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-lg-8">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="font-weight-bold fs-5">Datos</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><b>Propietario:</b> {{$parcela['propietario']}} &nbsp;&nbsp; <b>Cultivo:</b> {{$parcela['cultivo']}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Cepas:</b> {{ $parcela['num_uni_total']-$parcela['num_uni_falta']}} &nbsp;&nbsp; <b>Faltas:</b> {{$parcela['num_uni_falta']}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Parcela:</b> {{$parcela['parcela']}} &nbsp;&nbsp; <b>Polígono:</b> {{$parcela['poligono']}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Superficie (ha):</b> {{$parcela['superficie_total']}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><a class="btn btn-danger" href="https://www.google.com/maps/search/?api=1&query={{$parcela['latitud']}},{{$parcela['longitud']}}&zoom=20" target="_blank">Ver Maps</a>
+<a class="btn btn-warning" href="{{$parcela['url_sigpac']}}" target="_blank">Ver Sigpac</a></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="font-weight-bold fs-5">Trabajos</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach($tipoTrabajos as $tipoTrabajo)
+                                                                @php if ($tipoTrabajo['nombre'] == 'Labrar x2') {continue;} @endphp
+                                                                <tr>
+                                                                    <td><b>{{$tipoTrabajo['nombre']}}:</b> &nbsp;&nbsp;
 
-                                                                @php
-                                                                $webvitisController = new App\Http\Controllers\WebvitisController();
-                                                                if ($tipoTrabajo['nombre'] == 'Labrar') {
-                                                                    $resultado = $webvitisController->obtenerDatos($tipoTrabajo['nombre'], $parcela['nombre']);
-                                                                    $cadena1 = str_repeat('X ', $resultado);
+                                                                        @php
+                                                                        $webvitisController = new App\Http\Controllers\WebvitisController();
+                                                                        if ($tipoTrabajo['nombre'] == 'Labrar') {
+                                                                        $resultado = $webvitisController->obtenerDatos($tipoTrabajo['nombre'], $parcela['nombre']);
+                                                                        $cadena1 = str_repeat('X ', $resultado);
 
-                                                                    $resultado2 = $webvitisController->obtenerVueltasLabrar($parcela['nombre']);
-                                                                    $cadena2 = str_repeat('O ', $resultado2);
+                                                                        $resultado2 = $webvitisController->obtenerVueltasLabrar($parcela['nombre']);
+                                                                        $cadena2 = str_repeat('O ', $resultado2);
 
-                                                                    $cadenaX = $cadena1 . $cadena2;
-                                                                } else {
+                                                                        $cadenaX = $cadena1 . $cadena2;
+                                                                        } else {
 
-                                                                    $resultado = $webvitisController->obtenerDatos($tipoTrabajo['nombre'], $parcela['nombre']);
-                                                                    $cadenaX = str_repeat('X ', $resultado);
-                                                                   
-                                                                }
-                                                                @endphp
-                                                                
-                                                               
+                                                                        $resultado = $webvitisController->obtenerDatos($tipoTrabajo['nombre'], $parcela['nombre']);
+                                                                        $cadenaX = str_repeat('X ', $resultado);
 
-                                                                <span class="text-danger font-weight-bold fs-5">{{$cadenaX}}</span>
-
-                                                            </td>
-                                                            <td></td>
-                                                        </tr>
-
-                                                        @endforeach
+                                                                        }
+                                                                        @endphp
 
 
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            </div>
+
+                                                                        <span class="text-danger font-weight-bold fs-5">{{$cadenaX}}</span>
+
+                                                                    </td>
+                                                                    <td></td>
+                                                                </tr>
+
+                                                                @endforeach
+
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </div>
 
 

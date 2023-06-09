@@ -124,6 +124,14 @@
     <input type="text" name="url_sigpac" class="form-control" value="{{ isset($parcela->url_sigpac) ? $parcela->url_sigpac : old('url_sigpac') }}" id="url_sigpac"><br>
 </div>
 @endif
+<div class="form-group">
+    <label for="latitud">Latitud: </label>
+    <input type="text" name="latitud" class="form-control" value="{{ isset($parcela->latitud) ? $parcela->latitud : old('latitud') }}" id="latitud"><br>
+</div>
+<div class="form-group">
+    <label for="longitud">Longitud: </label>
+    <input type="text" name="longitud" class="form-control" value="{{ isset($parcela->longitud) ? $parcela->longitud : old('longitud') }}" id="longitud"><br>
+</div>
 <input type="submit" class="btn btn-success" value="{{$modo}} parcela" id="Enviar">
 
 <a class="btn btn-primary" href="{{ url('parcelas/') }}">Regresar</a>
