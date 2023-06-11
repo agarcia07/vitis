@@ -117,7 +117,8 @@ use Carbon\Carbon;
                                                                 </tr>
                                                                 <tr>
                                                                     <td><a class="btn btn-danger" href="https://www.google.com/maps/search/?api=1&query={{$parcela['latitud']}},{{$parcela['longitud']}}&zoom=20" target="_blank">Ver Maps</a>
-<a class="btn btn-warning" href="{{$parcela['url_sigpac']}}" target="_blank">Ver Sigpac</a></td>
+                                                                        <a class="btn btn-warning" href="{{$parcela['url_sigpac']}}" target="_blank">Ver Sigpac</a>
+                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -158,7 +159,6 @@ use Carbon\Carbon;
                                                                         <span class="text-danger font-weight-bold fs-5">{{$cadenaX}}</span>
 
                                                                     </td>
-                                                                    <td></td>
                                                                 </tr>
 
                                                                 @endforeach
