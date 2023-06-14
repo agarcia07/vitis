@@ -53,6 +53,7 @@ Route::patch('parcelas/{id}', [ParcelaController::class, 'update'])->middleware(
 //APARTADO WEB
 Route::get('/web', [WebvitisController::class, 'index'])->name('web');
 Route::post('/web', [WebvitisController::class, 'storeTrabajo']);
+Route::get('web/generar-pdf', [WebvitisController::class, 'generarPDF'])->name('pdf');
 
 //PROVINCIAS
 Route::get('/provincias', [ProvinciaController::class, 'index'])->middleware('auth')->name('provincias');

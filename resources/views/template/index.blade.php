@@ -32,6 +32,7 @@ use Carbon\Carbon;
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{url('/login')}}">Admin</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{url('web/generar-pdf')}}" target="_blank">Generar PDF</a></li>
                 </ul>
             </div>
         </div>
@@ -107,7 +108,7 @@ use Carbon\Carbon;
                                                                     <td><b>Propietario:</b> {{$parcela['propietario']}} &nbsp;&nbsp; <b>Cultivo:</b> {{$parcela['cultivo']}}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><b>Cepas:</b> {{ $parcela['num_uni_total']-$parcela['num_uni_falta']}} &nbsp;&nbsp; <b>Faltas:</b> {{$parcela['num_uni_falta']}}</td>
+                                                                    <td><b>Cepas:</b> {{ $resultado = $parcela['num_uni_total'] - $parcela['num_uni_falta'] < 0 ? 0 : $parcela['num_uni_total'] - $parcela['num_uni_falta'] }} &nbsp;&nbsp; <b>Faltas:</b> {{$parcela['num_uni_falta']}}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td><b>Parcela:</b> {{$parcela['parcela']}} &nbsp;&nbsp; <b>Polígono:</b> {{$parcela['poligono']}}</td>

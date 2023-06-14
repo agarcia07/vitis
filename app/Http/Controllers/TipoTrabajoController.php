@@ -15,7 +15,7 @@ class TipoTrabajoController extends Controller
     public function index()
     {
         //
-        $datos['tipoTrabajos']=TipoTrabajo::paginate(4);
+        $datos['tipoTrabajos']=TipoTrabajo::paginate();
         return view('tipo-trabajo.index',$datos);
     }
 

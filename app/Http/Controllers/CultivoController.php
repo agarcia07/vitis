@@ -15,7 +15,7 @@ class CultivoController extends Controller
     public function index()
     {
         //
-        $datos['cultivos']=Cultivo::paginate(4);
+        $datos['cultivos']=Cultivo::paginate();
         return view('cultivo.index', $datos);
     }
 

@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Parcela;
 use App\Models\Trabajo;
 use App\Models\TipoTrabajo;
+use App\Models\Propietario;
 use App\Models\Webvitis;
 use Carbon\Carbon;
 use App\Http\Controllers\ParcelaController;
 use App\Models\Municipio;
+use PDF;
 
 class WebvitisController extends Controller
 {
@@ -27,13 +29,48 @@ class WebvitisController extends Controller
                                 ->get();
 
 
-
         return view('template.index', [
             'parcelas' => $parcelas->toArray(),
             'tipoTrabajos' => $tipoTrabajos->toArray(),
             'trabajos' => $trabajos->toArray(),
             'busqueda'=>$busqueda
         ]);
+    }
+
+    public function generarPDF()
+    {
+                $parcelas = Parcela::all();
+                $tipoTrabajos = TipoTrabajo::all();
+                $trabajos = Trabajo::all();
+                $propietarios = Propietario::all();
+
+                $fechaActual = Carbon::now()->year;
+                $fechaAnterior = $fechaActual - 1;
+                
+                $fechaPdf = $fechaAnterior . '-' . $fechaActual;
+                
+
+                $pdf = PDF::loadView('template.pdf',[
+                    'parcelas' => $parcelas->toArray(),
+                    'tipoTrabajos' => $tipoTrabajos->toArray(),
+                    'trabajos' => $trabajos->toArray(),
+                    'propietarios' => $propietarios->toArray(),
+                    'fechaPdf' => $fechaPdf
+                ]);
+                return $pdf->stream();
+
+ 
+    }
+
+    public function parcelasPropietario($propietario,$parcela)
+    {
+
+        $resultado = Parcela::where('propietario', $propietario)
+            ->where('nombre', $parcela)
+            ->get();
+
+
+        return $resultado;
     }
 
     public function obtenerDatos($trabajo,$parcela)
