@@ -111,6 +111,15 @@ use Carbon\Carbon;
                                                                     <td><b>Cepas:</b> {{ $resultado = $parcela['num_uni_total'] - $parcela['num_uni_falta'] < 0 ? 0 : $parcela['num_uni_total'] - $parcela['num_uni_falta'] }} &nbsp;&nbsp; <b>Faltas:</b> {{$parcela['num_uni_falta']}}</td>
                                                                 </tr>
                                                                 <tr>
+                                                                    <td><b>Municipio:</b> 
+                                                                        @foreach($municipios as $municipio)
+                                                                            @php if($municipio['id'] == $parcela['municipio_id']){ @endphp
+                                                                                {{$municipio['nombre']}}
+                                                                            @php } @endphp
+                                                                        @endforeach 
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
                                                                     <td><b>Parcela:</b> {{$parcela['parcela']}} &nbsp;&nbsp; <b>Polígono:</b> {{$parcela['poligono']}}</td>
                                                                 </tr>
                                                                 <tr>

@@ -38,7 +38,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($parcelas as $parcela)
+                @foreach($datos['parcelas'] as $parcela)
                 <tr>
                     <th scope="row">{{ $parcela->id }}</th>
                     <td>{{ $parcela->nombre }}</td>
@@ -46,8 +46,24 @@
                     <td>{{ $parcela->cultivo }}</td>
                     <td>{{ $parcela->num_uni_total }}</td>
                     <td>{{ $parcela->num_uni_falta }}</td>
-                    <td>{{ $parcela->provincia_id }}</td>
-                    <td>{{ $parcela->municipio_id }}</td>
+                    @foreach($datosProvincias['datosProvincias'] as $datosProvincia)
+                    @php
+                    if($datosProvincia->id == $parcela->provincia_id) {
+                    @endphp
+                    <td>{{ $datosProvincia->nombre }}</td>
+                    @php
+                    }
+                    @endphp
+                    @endforeach
+                    @foreach($datosMunicipios['datosMunicipios'] as $datosMunicipio)
+                    @php
+                    if($datosMunicipio->id == $parcela->municipio_id) {
+                    @endphp
+                    <td>{{ $datosMunicipio->nombre }}</td>
+                    @php
+                    }
+                    @endphp
+                    @endforeach
                     <td>{{ $parcela->agregado }}</td>
                     <td>{{ $parcela->zona }}</td>
                     <td>{{ $parcela->poligono }}</td>
@@ -105,12 +121,15 @@
                             "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                         }
                     },
-                    "lengthMenu": [[5, 10, 15, -1], [5, 10, 50, "Todas"]]
+                    "lengthMenu": [
+                        [5, 10, 15, -1],
+                        [5, 10, 50, "Todas"]
+                    ]
                 });
             });
         </script>
         @endsection
-        {!! $parcelas->links() !!}
+        {!! $datos['parcelas']->links() !!}
     </div>
 </div>
 

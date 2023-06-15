@@ -22,7 +22,13 @@ class ParcelaController extends Controller
     {
         //
         $datos['parcelas']=Parcela::paginate();
-        return view('parcela.index', $datos);
+        $datosMunicipios['datosMunicipios']=Municipio::all();
+        $datosProvincias['datosProvincias']=Provincia::all();
+        return view('parcela.index', [
+            'datos' => $datos,
+            'datosMunicipios' => $datosMunicipios,
+            'datosProvincias' => $datosProvincias
+        ]);
 
     }
 

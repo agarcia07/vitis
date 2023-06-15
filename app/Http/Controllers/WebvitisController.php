@@ -11,6 +11,7 @@ use App\Models\Webvitis;
 use Carbon\Carbon;
 use App\Http\Controllers\ParcelaController;
 use App\Models\Municipio;
+use App\Models\Provincia;
 use PDF;
 
 class WebvitisController extends Controller
@@ -21,6 +22,8 @@ class WebvitisController extends Controller
         //$parcelas = Parcela::all();
         $tipoTrabajos = TipoTrabajo::all();
         $trabajos = Trabajo::all();
+        $provincias = Provincia::all();
+        $municipios = Municipio::all();
 
         //Buscador web
         $busqueda = $request->busqueda;
@@ -33,7 +36,9 @@ class WebvitisController extends Controller
             'parcelas' => $parcelas->toArray(),
             'tipoTrabajos' => $tipoTrabajos->toArray(),
             'trabajos' => $trabajos->toArray(),
-            'busqueda'=>$busqueda
+            'provincias' => $provincias->toArray(),
+            'municipios' => $municipios->toArray(),
+            'busqueda'=>$busqueda,
         ]);
     }
 
