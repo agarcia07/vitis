@@ -111,12 +111,12 @@ use Carbon\Carbon;
                                                                     <td><b>Cepas:</b> {{ $resultado = $parcela['num_uni_total'] - $parcela['num_uni_falta'] < 0 ? 0 : $parcela['num_uni_total'] - $parcela['num_uni_falta'] }} &nbsp;&nbsp; <b>Faltas:</b> {{$parcela['num_uni_falta']}}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><b>Municipio:</b> 
+                                                                    <td><b>Municipio:</b>
                                                                         @foreach($municipios as $municipio)
-                                                                            @php if($municipio['id'] == $parcela['municipio_id']){ @endphp
-                                                                                {{$municipio['nombre']}}
-                                                                            @php } @endphp
-                                                                        @endforeach 
+                                                                        @php if($municipio['id'] == $parcela['municipio_id']){ @endphp
+                                                                        {{$municipio['nombre']}}
+                                                                        @php } @endphp
+                                                                        @endforeach
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -126,8 +126,11 @@ use Carbon\Carbon;
                                                                     <td><b>Superficie (ha):</b> {{$parcela['superficie_total']}}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><a class="btn btn-danger" href="https://www.google.com/maps/search/?api=1&query={{$parcela['latitud']}},{{$parcela['longitud']}}&zoom=20" target="_blank">Ver Maps</a>
-                                                                        <a class="btn btn-warning" href="{{$parcela['url_sigpac']}}" target="_blank">Ver Sigpac</a>
+                                                                    <td><a class="btn btn-warning mt-3" href="{{$parcela['url_sigpac']}}" target="_blank">Ver Sigpac</a>
+                                                                        @php if($parcela['pdf_sigpac'] != ''){ @endphp
+                                                                        <a class="btn btn-warning mt-3" href="{{ asset('storage/pdf/' . $parcela['pdf_sigpac']) }}" target="_blank">PDF SigPac</a>
+                                                                        @php } @endphp
+                                                                        <a class="btn btn-danger mt-3" href="https://www.google.com/maps/search/?api=1&query={{$parcela['latitud']}},{{$parcela['longitud']}}&zoom=20" target="_blank">Ver Maps</a>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>

@@ -123,6 +123,10 @@
     <label for="url_sigpac">Url Sigpac: </label>
     <input type="text" name="url_sigpac" class="form-control" value="{{ isset($parcela->url_sigpac) ? $parcela->url_sigpac : old('url_sigpac') }}" id="url_sigpac"><br>
 </div>
+<div class="form-group ">
+    <label for="pdf_sigpac">PDF SigPac</label>
+    <input type="file" name="pdf_sigpac" class="form-control" id="pdf_sigpac"><br>
+</div>
 @endif
 <div class="form-group">
     <label for="latitud">Latitud: </label>

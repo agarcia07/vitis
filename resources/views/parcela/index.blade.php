@@ -83,7 +83,9 @@
                             <input class="btn btn-danger" type="submit" onclick="return confirm('¿Desea borrar la parcela?')" value="Borrar">
 
                         </form>
-
+                        @php if($parcela->pdf_sigpac != ''){ @endphp
+                        <a class="btn btn-success" href="{{ asset('storage/pdf/' . $parcela->pdf_sigpac) }}" target="_blank">PDF SigPac</a>
+                        @php } @endphp
                     </td>
                 </tr>
                 @endforeach

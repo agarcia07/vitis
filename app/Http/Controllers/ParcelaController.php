@@ -179,6 +179,33 @@ class ParcelaController extends Controller
 
         //$datosParcela['imagen']->$datosParcela['imagen_url'];
         unset($datosParcela['imagen_url']);
+
+        $parcela=Parcela::findOrFail($id);
+        
+        if ($request->hasFile('pdf_sigpac') && $request->file('pdf_sigpac')->isValid()) {
+
+            if ($parcela->pdf_sigpac) {
+                Storage::disk('public')->delete('pdf/' . $parcela->pdf_sigpac);
+            }
+    
+            $archivo = $request->file('pdf_sigpac');
+    
+            // Generar un nombre único para el archivo
+            $nombreArchivo = time() . '_' . $archivo->getClientOriginalName();
+    
+            // Mover el archivo al directorio de almacenamiento (por ejemplo, en la carpeta 'public/storage/pdf')
+            $archivo->storeAs('pdf', $nombreArchivo, 'public');
+    
+            // Agregar el nombre del archivo al arreglo de datos
+            $datosParcela['pdf_sigpac'] = $nombreArchivo;
+    
+            // Guardar otros campos del formulario en el arreglo de datos
+            // ...
+    
+    
+            // Redireccionar u hacer otras operaciones según sea necesario
+        }
+
         Parcela::where('id','=',$id)->update($datosParcela);
 
         //Recupero la informacion de nuevo con ese id y devulevo el formulario en la vista parcelas index
