@@ -15,7 +15,7 @@ class AddPdfSigpacToParcelasTable extends Migration
     {
         Schema::table('parcelas', function (Blueprint $table) {
             //
-            $table->string('pdf_sigpac');
+            $table->string('pdf_sigpac')->nullable();
         });
     }
 

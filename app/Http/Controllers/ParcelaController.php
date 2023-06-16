@@ -111,6 +111,26 @@ class ParcelaController extends Controller
             $datosParcela['imagen']=$request->file('imagen')->store('uploads','public');
         }
 
+        if ($request->hasFile('pdf_sigpac') && $request->file('pdf_sigpac')->isValid()) {
+    
+            $archivo = $request->file('pdf_sigpac');
+    
+            // Generar un nombre único para el archivo
+            $nombreArchivo = time() . '_' . $archivo->getClientOriginalName();
+    
+            // Mover el archivo al directorio de almacenamiento (por ejemplo, en la carpeta 'public/storage/pdf')
+            $archivo->storeAs('pdf', $nombreArchivo, 'public');
+    
+            // Agregar el nombre del archivo al arreglo de datos
+            $datosParcela['pdf_sigpac'] = $nombreArchivo;
+    
+            // Guardar otros campos del formulario en el arreglo de datos
+            // ...
+    
+    
+            // Redireccionar u hacer otras operaciones según sea necesario
+        }
+
         Parcela::insert($datosParcela);
 
 
