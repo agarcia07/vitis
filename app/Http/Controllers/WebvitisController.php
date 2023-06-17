@@ -49,19 +49,32 @@ class WebvitisController extends Controller
                 $trabajos = Trabajo::all();
                 $propietarios = Propietario::all();
 
+                //Comprueba si existe olivera para Jose Antonio - Esto es un parche que se debe arreglar.//
+                $existeOliveraJA = Parcela::where('propietario', 'LIKE', 'Jose Antonio')
+                ->where('cultivo', 'Olivera')
+                ->exists();
+
+                //Comprueba si existe Sin CUltivar para Jose Antonio - Esto es un parche que se debe arreglar.//
+                $existeSinCultivarJA = Parcela::where('propietario', 'LIKE', 'Jose Antonio')
+                ->where('cultivo', 'Sin Cultivar')
+                ->exists();
+
                 $fechaActual = Carbon::now()->year;
                 $fechaAnterior = $fechaActual - 1;
                 
                 $fechaPdf = $fechaAnterior . '-' . $fechaActual;
-                
 
-                $pdf = PDF::loadView('template.pdf',[
+
+                $pdf = PDF::loadView('template.pdf', [
                     'parcelas' => $parcelas->toArray(),
                     'tipoTrabajos' => $tipoTrabajos->toArray(),
                     'trabajos' => $trabajos->toArray(),
                     'propietarios' => $propietarios->toArray(),
-                    'fechaPdf' => $fechaPdf
+                    'fechaPdf' => $fechaPdf,
+                    'existeOliveraJA' => $existeOliveraJA,
+                    'existeSinCultivarJA' => $existeSinCultivarJA
                 ]);
+
                 return $pdf->stream();
 
  
